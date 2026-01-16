@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"go-admin/common/config"
+	_ "go-admin/docs"
 	"go-admin/pkg/db"
 	log2 "go-admin/pkg/log"
 	"go-admin/pkg/redis"
@@ -15,8 +16,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// TIP <p>To run your code, right-click the code and select <b>Run</b>.</p> <p>Alternatively, click
-// the <icon src="AllIcons.Actions.Execute"/> icon in the gutter and select the <b>Run</b> menu item from here.</p>
+// @title 管理后台接口
+// @version 0.1
+// description 管理后台接口
+// @securityDefinitions.apiKey ApiKeyAuth
+// @in header
+// @name Authorization
 func main() {
 	log := log2.Log()
 	gin.SetMode(config.Config.Server.Model)
