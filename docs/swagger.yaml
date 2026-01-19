@@ -1,10 +1,62 @@
 definitions:
+  entity.DelSysPostDto:
+    properties:
+      ids:
+        items:
+          type: integer
+        type: array
+    type: object
+  entity.LoginDto:
+    properties:
+      idKey:
+        description: uuid
+        type: string
+      image:
+        description: 验证码
+        maxLength: 6
+        minLength: 4
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - idKey
+    - image
+    - password
+    - username
+    type: object
+  entity.SysPost:
+    properties:
+      createTime:
+        $ref: '#/definitions/util.HTime'
+      id:
+        type: integer
+      postCode:
+        type: string
+      postName:
+        type: string
+      postStatus:
+        type: integer
+      remark:
+        type: string
+    type: object
+  entity.SysPostIdDto:
+    properties:
+      id:
+        type: integer
+    type: object
   result.Result:
     properties:
       code:
         type: integer
       data: {}
       message:
+        type: string
+    type: object
+  util.HTime:
+    properties:
+      time.Time:
         type: string
     type: object
 info:
@@ -23,6 +75,149 @@ paths:
           schema:
             $ref: '#/definitions/result.Result'
       summary: 验证码接口
+  /api/login:
+    post:
+      description: 用户登录接口
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entity.LoginDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 用户登录接口
+  /api/post/add:
+    post:
+      description: 新增岗位接口
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entity.SysPost'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 新增岗位接口
+  /api/post/batch/delete:
+    delete:
+      description: 批量删除岗位
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entity.DelSysPostDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 批量删除岗位
+  /api/post/delete:
+    delete:
+      description: 根据岗位id删除
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entity.SysPostIdDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 根据岗位id删除
+  /api/post/info:
+    get:
+      description: 根据岗位id查询
+      parameters:
+      - description: ID
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 根据岗位id查询
+  /api/post/list:
+    get:
+      description: 分页查询岗位列表
+      parameters:
+      - description: 页码
+        in: query
+        name: pageNum
+        type: integer
+      - description: 每页数量
+        in: query
+        name: pageSize
+        type: integer
+      - description: 岗位名称
+        in: query
+        name: postName
+        type: string
+      - description: 岗位状态
+        in: query
+        name: pageStatus
+        type: string
+      - description: 开始时间
+        in: query
+        name: beginTime
+        type: string
+      - description: 结束时间
+        in: query
+        name: endTime
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 分页查询岗位列表
+  /api/post/update:
+    put:
+      description: 编辑岗位
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entity.SysPost'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 编辑岗位
 securityDefinitions:
   ApiKeyAuth:
     in: header
