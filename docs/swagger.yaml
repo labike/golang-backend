@@ -26,6 +26,31 @@ definitions:
     - password
     - username
     type: object
+  entity.SysDept:
+    properties:
+      children:
+        description: -表示不和数据库字段相关联
+        items:
+          $ref: '#/definitions/entity.SysDept'
+        type: array
+      createTime:
+        $ref: '#/definitions/util.HTime'
+      deptName:
+        type: string
+      deptStatus:
+        type: integer
+      deptType:
+        type: integer
+      id:
+        type: integer
+      parentId:
+        type: integer
+    type: object
+  entity.SysDeptDto:
+    properties:
+      id:
+        type: integer
+    type: object
   entity.SysPost:
     properties:
       createTime:
@@ -44,6 +69,13 @@ definitions:
   entity.SysPostIdDto:
     properties:
       id:
+        type: integer
+    type: object
+  entity.UpdateSysPostStatusDto:
+    properties:
+      id:
+        type: integer
+      postStatus:
         type: integer
     type: object
   result.Result:
@@ -75,6 +107,107 @@ paths:
           schema:
             $ref: '#/definitions/result.Result'
       summary: 验证码接口
+  /api/dept/add:
+    post:
+      description: 新增部门
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entity.SysDept'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 新增部门
+  /api/dept/delete:
+    delete:
+      description: 根据部门id删除
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entity.SysDeptDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 根据部门id删除
+  /api/dept/info:
+    get:
+      description: 根据部门id查询
+      parameters:
+      - description: ID
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 根据部门id查询
+  /api/dept/list:
+    get:
+      description: 查询部门列表
+      parameters:
+      - description: 部门名称
+        in: query
+        name: deptName
+        type: string
+      - description: 部门状态
+        in: query
+        name: deptStatus
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 查询部门列表
+  /api/dept/update:
+    put:
+      description: 编辑部门
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entity.SysDept'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 编辑部门
+  /api/dept/vo/list:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 获取部门下拉列表
   /api/login:
     post:
       description: 用户登录接口
@@ -218,6 +351,35 @@ paths:
           schema:
             $ref: '#/definitions/result.Result'
       summary: 编辑岗位
+  /api/post/updateStatus:
+    put:
+      description: 岗位状态修改接口
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entity.UpdateSysPostStatusDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 岗位状态修改接口
+  /api/post/vo/list:
+    get:
+      description: 岗位下拉列表
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 岗位下拉列表
 securityDefinitions:
   ApiKeyAuth:
     in: header

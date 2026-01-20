@@ -82,3 +82,15 @@ func DeleteSysPostById(dto entity.SysPostIdDto) {
 func BatchDeleteSysPost(dto entity.DelSysPostDto) {
 	Db.Where("id in (?)", dto.Ids).Delete(&entity.SysPost{})
 }
+
+func UpdatePostStatus(dto entity.UpdateSysPostStatusDto) {
+	var sysPost entity.SysPost
+	Db.First(&sysPost, dto.Id)
+	sysPost.PostStatus = dto.PostStatus
+	Db.Save(&sysPost)
+}
+
+func SysPostVoList() (sysPostVo []entity.SysPostVo) {
+	Db.Table("sys_post").Select("id, post_name").Scan(&sysPostVo)
+	return sysPostVo
+}

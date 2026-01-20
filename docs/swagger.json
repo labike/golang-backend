@@ -23,6 +23,163 @@
                 }
             }
         },
+        "/api/dept/add": {
+            "post": {
+                "description": "新增部门",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "新增部门",
+                "parameters": [
+                    {
+                        "description": "data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.SysDept"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/result.Result"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/dept/delete": {
+            "delete": {
+                "description": "根据部门id删除",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "根据部门id删除",
+                "parameters": [
+                    {
+                        "description": "data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.SysDeptDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/result.Result"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/dept/info": {
+            "get": {
+                "description": "根据部门id查询",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "根据部门id查询",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/result.Result"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/dept/list": {
+            "get": {
+                "description": "查询部门列表",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "查询部门列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "部门名称",
+                        "name": "deptName",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "部门状态",
+                        "name": "deptStatus",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/result.Result"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/dept/update": {
+            "put": {
+                "description": "编辑部门",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "编辑部门",
+                "parameters": [
+                    {
+                        "description": "data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.SysDept"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/result.Result"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/dept/vo/list": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "获取部门下拉列表",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/result.Result"
+                        }
+                    }
+                }
+            }
+        },
         "/api/login": {
             "post": {
                 "description": "用户登录接口",
@@ -243,6 +400,51 @@
                     }
                 }
             }
+        },
+        "/api/post/updateStatus": {
+            "put": {
+                "description": "岗位状态修改接口",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "岗位状态修改接口",
+                "parameters": [
+                    {
+                        "description": "data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.UpdateSysPostStatusDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/result.Result"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/post/vo/list": {
+            "get": {
+                "description": "岗位下拉列表",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "岗位下拉列表",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/result.Result"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -284,6 +486,44 @@
                 }
             }
         },
+        "entity.SysDept": {
+            "type": "object",
+            "properties": {
+                "children": {
+                    "description": "-表示不和数据库字段相关联",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entity.SysDept"
+                    }
+                },
+                "createTime": {
+                    "$ref": "#/definitions/util.HTime"
+                },
+                "deptName": {
+                    "type": "string"
+                },
+                "deptStatus": {
+                    "type": "integer"
+                },
+                "deptType": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "parentId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "entity.SysDeptDto": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
         "entity.SysPost": {
             "type": "object",
             "properties": {
@@ -311,6 +551,17 @@
             "type": "object",
             "properties": {
                 "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "entity.UpdateSysPostStatusDto": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "postStatus": {
                     "type": "integer"
                 }
             }

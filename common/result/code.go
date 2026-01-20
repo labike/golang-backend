@@ -12,6 +12,8 @@ type Codes struct {
 	PasswordError      uint
 	StatusEnabled      uint
 	POSTEXISTS         uint
+	DEPTEXISTS         uint
+	DEPTDELETEFAILED   uint
 }
 
 var ApiCode = &Codes{
@@ -25,6 +27,8 @@ var ApiCode = &Codes{
 	PasswordError:      410,
 	StatusEnabled:      411,
 	POSTEXISTS:         412,
+	DEPTEXISTS:         413,
+	DEPTDELETEFAILED:   414,
 }
 
 func init() {
@@ -39,6 +43,8 @@ func init() {
 		ApiCode.PasswordError:      "账号或密码错误",
 		ApiCode.StatusEnabled:      "该账号已被禁用",
 		ApiCode.POSTEXISTS:         "岗位已存在",
+		ApiCode.DEPTEXISTS:         "部门已存在",
+		ApiCode.DEPTDELETEFAILED:   "部门删除失败",
 	}
 }
 

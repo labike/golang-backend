@@ -23,3 +23,14 @@ type SysPostIdDto struct {
 type DelSysPostDto struct {
 	Ids []uint
 }
+
+type UpdateSysPostStatusDto struct {
+	Id         uint
+	PostStatus int
+}
+
+// 岗位下拉列表
+type SysPostVo struct {
+	Id       uint   `json:"id"`
+	PostName string `json:"postName"`
+}

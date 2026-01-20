@@ -90,3 +90,24 @@ func BatchDeleteSysPost(c *gin.Context) {
 	_ = c.BindJSON(&dto)
 	service.SysPostService().BatchDeleteSysPostByIds(c, dto)
 }
+
+// @Summary 岗位状态修改接口
+// @Produce json
+// @Description 岗位状态修改接口
+// @Param data body entity.UpdateSysPostStatusDto true "data"
+// @Success 200 {object} result.Result
+// @router /api/post/updateStatus [put]
+func UpdateSysPostStatus(c *gin.Context) {
+	var dto entity.UpdateSysPostStatusDto
+	_ = c.BindJSON(&dto)
+	service.SysPostService().UpdateSysPostStatus(c, dto)
+}
+
+// @Summary 岗位下拉列表
+// @Produce json
+// @Description 岗位下拉列表
+// @Success 200 {object} result.Result
+// @router /api/post/vo/list [get]
+func QuerySysPostVoList(c *gin.Context) {
+	service.SysPostService().QuerySysPostVoList(c)
+}

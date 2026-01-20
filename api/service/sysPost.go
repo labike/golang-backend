@@ -16,9 +16,20 @@ type ISysPostService interface {
 	UpdateSysPost(c *gin.Context, sysPost entity.SysPost)
 	DeleteSysPostById(c *gin.Context, dto entity.SysPostIdDto)
 	BatchDeleteSysPostByIds(c *gin.Context, dto entity.DelSysPostDto)
+	UpdateSysPostStatus(c *gin.Context, dto entity.UpdateSysPostStatusDto)
+	QuerySysPostVoList(c *gin.Context)
 }
 
 type SysPostServiceImpl struct{}
+
+func (s SysPostServiceImpl) QuerySysPostVoList(c *gin.Context) {
+	result.Success(c, dao.SysPostVoList())
+}
+
+func (s SysPostServiceImpl) UpdateSysPostStatus(c *gin.Context, dto entity.UpdateSysPostStatusDto) {
+	dao.UpdatePostStatus(dto)
+	result.Success(c, true)
+}
 
 func (s SysPostServiceImpl) BatchDeleteSysPostByIds(c *gin.Context, dto entity.DelSysPostDto) {
 	dao.BatchDeleteSysPost(dto)
