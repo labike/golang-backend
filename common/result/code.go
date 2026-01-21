@@ -14,6 +14,9 @@ type Codes struct {
 	POSTEXISTS         uint
 	DEPTEXISTS         uint
 	DEPTDELETEFAILED   uint
+	MENUEXISTS         uint
+	DELETEMENUFAILED   uint
+	ADDROLEFAILED      uint
 }
 
 var ApiCode = &Codes{
@@ -29,6 +32,9 @@ var ApiCode = &Codes{
 	POSTEXISTS:         412,
 	DEPTEXISTS:         413,
 	DEPTDELETEFAILED:   414,
+	MENUEXISTS:         415,
+	DELETEMENUFAILED:   416,
+	ADDROLEFAILED:      417,
 }
 
 func init() {
@@ -45,6 +51,9 @@ func init() {
 		ApiCode.POSTEXISTS:         "岗位已存在",
 		ApiCode.DEPTEXISTS:         "部门已存在",
 		ApiCode.DEPTDELETEFAILED:   "部门删除失败",
+		ApiCode.MENUEXISTS:         "菜单已存在",
+		ApiCode.DELETEMENUFAILED:   "删除菜单失败",
+		ApiCode.ADDROLEFAILED:      "添加角色失败",
 	}
 }
 

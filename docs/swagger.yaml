@@ -1,4 +1,15 @@
 definitions:
+  entity.AddSysRoleDto:
+    properties:
+      description:
+        type: string
+      roleKey:
+        type: string
+      roleName:
+        type: string
+      status:
+        type: integer
+    type: object
   entity.DelSysPostDto:
     properties:
       ids:
@@ -47,6 +58,38 @@ definitions:
         type: integer
     type: object
   entity.SysDeptDto:
+    properties:
+      id:
+        type: integer
+    type: object
+  entity.SysMenu:
+    properties:
+      children:
+        items:
+          $ref: '#/definitions/entity.SysMenu'
+        type: array
+      createTime:
+        $ref: '#/definitions/util.HTime'
+      icon:
+        type: string
+      id:
+        type: integer
+      menuName:
+        type: string
+      menuStatus:
+        type: integer
+      menuType:
+        type: integer
+      parentId:
+        type: integer
+      sort:
+        type: integer
+      url:
+        type: string
+      value:
+        type: string
+    type: object
+  entity.SysMenuIdDto:
     properties:
       id:
         type: integer
@@ -226,6 +269,107 @@ paths:
           schema:
             $ref: '#/definitions/result.Result'
       summary: 用户登录接口
+  /api/menu/add:
+    post:
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entity.SysMenu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 创建菜单
+  /api/menu/delete:
+    delete:
+      description: 删除菜单
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entity.SysMenuIdDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 删除菜单
+  /api/menu/info:
+    get:
+      description: 根据菜单id查询
+      parameters:
+      - description: id
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 根据菜单id查询
+  /api/menu/list:
+    get:
+      description: 获取菜单列表
+      parameters:
+      - description: 菜单名称
+        in: query
+        name: menuName
+        type: string
+      - description: 菜单状态
+        in: query
+        name: menuStatus
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 获取菜单列表
+  /api/menu/update:
+    put:
+      description: 编辑菜单
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entity.SysMenu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 编辑菜单
+  /api/menu/vo/list:
+    get:
+      description: 查询菜单下拉列表
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 查询菜单下拉列表
   /api/post/add:
     post:
       description: 新增岗位接口
@@ -380,6 +524,24 @@ paths:
           schema:
             $ref: '#/definitions/result.Result'
       summary: 岗位下拉列表
+  /api/role/add:
+    post:
+      description: 创建角色
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entity.AddSysRoleDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 创建角色
 securityDefinitions:
   ApiKeyAuth:
     in: header

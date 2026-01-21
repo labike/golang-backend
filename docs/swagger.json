@@ -208,6 +208,163 @@
                 }
             }
         },
+        "/api/menu/add": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "创建菜单",
+                "parameters": [
+                    {
+                        "description": "data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.SysMenu"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/result.Result"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/menu/delete": {
+            "delete": {
+                "description": "删除菜单",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "删除菜单",
+                "parameters": [
+                    {
+                        "description": "data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.SysMenuIdDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/result.Result"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/menu/info": {
+            "get": {
+                "description": "根据菜单id查询",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "根据菜单id查询",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/result.Result"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/menu/list": {
+            "get": {
+                "description": "获取菜单列表",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "获取菜单列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "菜单名称",
+                        "name": "menuName",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "菜单状态",
+                        "name": "menuStatus",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/result.Result"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/menu/update": {
+            "put": {
+                "description": "编辑菜单",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "编辑菜单",
+                "parameters": [
+                    {
+                        "description": "data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.SysMenu"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/result.Result"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/menu/vo/list": {
+            "get": {
+                "description": "查询菜单下拉列表",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "查询菜单下拉列表",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/result.Result"
+                        }
+                    }
+                }
+            }
+        },
         "/api/post/add": {
             "post": {
                 "description": "新增岗位接口",
@@ -445,9 +602,54 @@
                     }
                 }
             }
+        },
+        "/api/role/add": {
+            "post": {
+                "description": "创建角色",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "创建角色",
+                "parameters": [
+                    {
+                        "description": "data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.AddSysRoleDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/result.Result"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "entity.AddSysRoleDto": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "roleKey": {
+                    "type": "string"
+                },
+                "roleName": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
         "entity.DelSysPostDto": {
             "type": "object",
             "properties": {
@@ -517,6 +719,55 @@
             }
         },
         "entity.SysDeptDto": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "entity.SysMenu": {
+            "type": "object",
+            "properties": {
+                "children": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entity.SysMenu"
+                    }
+                },
+                "createTime": {
+                    "$ref": "#/definitions/util.HTime"
+                },
+                "icon": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "menuName": {
+                    "type": "string"
+                },
+                "menuStatus": {
+                    "type": "integer"
+                },
+                "menuType": {
+                    "type": "integer"
+                },
+                "parentId": {
+                    "type": "integer"
+                },
+                "sort": {
+                    "type": "integer"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "entity.SysMenuIdDto": {
             "type": "object",
             "properties": {
                 "id": {
