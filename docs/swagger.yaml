@@ -37,6 +37,18 @@ definitions:
     - password
     - username
     type: object
+  entity.RoleMenu:
+    properties:
+      id:
+        type: integer
+      menuIds:
+        items:
+          type: integer
+        type: array
+    required:
+    - id
+    - menuIds
+    type: object
   entity.SysDept:
     properties:
       children:
@@ -114,11 +126,36 @@ definitions:
       id:
         type: integer
     type: object
+  entity.SysRoleIdDto:
+    properties:
+      id:
+        type: integer
+    type: object
   entity.UpdateSysPostStatusDto:
     properties:
       id:
         type: integer
       postStatus:
+        type: integer
+    type: object
+  entity.UpdateSysRoleDto:
+    properties:
+      description:
+        type: string
+      id:
+        type: integer
+      roleKey:
+        type: string
+      roleName:
+        type: string
+      status:
+        type: integer
+    type: object
+  entity.UpdateSysRoleStatusDto:
+    properties:
+      id:
+        type: integer
+      status:
         type: integer
     type: object
   result.Result:
@@ -542,6 +579,159 @@ paths:
           schema:
             $ref: '#/definitions/result.Result'
       summary: 创建角色
+  /api/role/assignPermission:
+    put:
+      description: 分配权限
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entity.RoleMenu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 分配权限
+  /api/role/delete:
+    delete:
+      description: 删除角色
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entity.SysRoleIdDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 删除角色
+  /api/role/info:
+    get:
+      description: 根据角色Id查询
+      parameters:
+      - description: Id
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 根据角色Id查询
+  /api/role/list:
+    get:
+      description: 获取角色列表(分页)
+      parameters:
+      - description: 页码
+        in: query
+        name: pageNum
+        type: integer
+      - description: 每页数量
+        in: query
+        name: pageSize
+        type: integer
+      - description: 角色名称
+        in: query
+        name: roleName
+        type: string
+      - description: 状态 ->启用 2->禁用
+        in: query
+        name: status
+        type: string
+      - description: 创建时间
+        in: query
+        name: beginTime
+        type: string
+      - description: 结束时间
+        in: query
+        name: endTime
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 获取角色列表(分页)
+  /api/role/update:
+    put:
+      description: 编辑角色
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entity.UpdateSysRoleDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 编辑角色
+  /api/role/updateStatus:
+    put:
+      description: 编辑角色状态
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entity.UpdateSysRoleStatusDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 编辑角色状态
+  /api/role/vo/idList:
+    get:
+      description: 根据角色id查询菜单权限
+      parameters:
+      - description: Id
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 根据角色id查询菜单权限
+  /api/role/vo/list:
+    get:
+      description: 角色下拉列表
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 角色下拉列表
 securityDefinitions:
   ApiKeyAuth:
     in: header

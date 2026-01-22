@@ -630,6 +630,242 @@
                     }
                 }
             }
+        },
+        "/api/role/assignPermission": {
+            "put": {
+                "description": "分配权限",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "分配权限",
+                "parameters": [
+                    {
+                        "description": "data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.RoleMenu"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/result.Result"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/role/delete": {
+            "delete": {
+                "description": "删除角色",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "删除角色",
+                "parameters": [
+                    {
+                        "description": "data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.SysRoleIdDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/result.Result"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/role/info": {
+            "get": {
+                "description": "根据角色Id查询",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "根据角色Id查询",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/result.Result"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/role/list": {
+            "get": {
+                "description": "获取角色列表(分页)",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "获取角色列表(分页)",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "pageNum",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页数量",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "角色名称",
+                        "name": "roleName",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "状态 -\u003e启用 2-\u003e禁用",
+                        "name": "status",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "创建时间",
+                        "name": "beginTime",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "结束时间",
+                        "name": "endTime",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/result.Result"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/role/update": {
+            "put": {
+                "description": "编辑角色",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "编辑角色",
+                "parameters": [
+                    {
+                        "description": "data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.UpdateSysRoleDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/result.Result"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/role/updateStatus": {
+            "put": {
+                "description": "编辑角色状态",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "编辑角色状态",
+                "parameters": [
+                    {
+                        "description": "data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.UpdateSysRoleStatusDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/result.Result"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/role/vo/idList": {
+            "get": {
+                "description": "根据角色id查询菜单权限",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "根据角色id查询菜单权限",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/result.Result"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/role/vo/list": {
+            "get": {
+                "description": "角色下拉列表",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "角色下拉列表",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/result.Result"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -685,6 +921,24 @@
                 },
                 "username": {
                     "type": "string"
+                }
+            }
+        },
+        "entity.RoleMenu": {
+            "type": "object",
+            "required": [
+                "id",
+                "menuIds"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "menuIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
                 }
             }
         },
@@ -806,6 +1060,14 @@
                 }
             }
         },
+        "entity.SysRoleIdDto": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
         "entity.UpdateSysPostStatusDto": {
             "type": "object",
             "properties": {
@@ -813,6 +1075,37 @@
                     "type": "integer"
                 },
                 "postStatus": {
+                    "type": "integer"
+                }
+            }
+        },
+        "entity.UpdateSysRoleDto": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "roleKey": {
+                    "type": "string"
+                },
+                "roleName": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "entity.UpdateSysRoleStatusDto": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "status": {
                     "type": "integer"
                 }
             }
