@@ -11,7 +11,7 @@ type config struct {
 	Server    server    `yaml:"server"`
 	Dbconfig  dbConfig  `yaml:"db"`
 	Redis     redis     `yaml:"redis"`
-	Imgupload imgUpload `yaml:"img_upload"`
+	Imgupload imgUpload `yaml:"imgUpload"`
 	Log       log       `yaml:"log"`
 }
 

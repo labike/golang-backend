@@ -21,7 +21,7 @@ redis:
   password:
 
 imgUpload:
-  uploadDir: /go-admin/upload
+  uploadDir: /go-admin/upload/
   imgHost: http://127.0.0.1:2002
 
 log:

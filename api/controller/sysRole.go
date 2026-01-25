@@ -16,6 +16,7 @@ var sysRole entity.SysRole
 // @Param data body entity.AddSysRoleDto true "data"
 // @Success 200 {object} result.Result
 // @router /api/role/add [post]
+// @Security ApiKeyAuth
 func CreateSysRole(c *gin.Context) {
 	var dto entity.AddSysRoleDto
 	_ = c.BindJSON(&dto)
@@ -28,6 +29,7 @@ func CreateSysRole(c *gin.Context) {
 // @Param id query int true "Id"
 // @Success 200 {object} result.Result
 // @router /api/role/info [get]
+// @Security ApiKeyAuth
 func GetSysRoleById(c *gin.Context) {
 	Id, _ := strconv.Atoi(c.Query("id"))
 	service.SysRoleService().GetSysRoleById(c, Id)
@@ -39,6 +41,7 @@ func GetSysRoleById(c *gin.Context) {
 // @Param data body entity.UpdateSysRoleDto true "data"
 // @Success 200 {object} result.Result
 // @router /api/role/update [put]
+// @Security ApiKeyAuth
 func UpdateSysRole(c *gin.Context) {
 	var dto entity.UpdateSysRoleDto
 	_ = c.BindJSON(&dto)
@@ -51,6 +54,7 @@ func UpdateSysRole(c *gin.Context) {
 // @Param data body entity.SysRoleIdDto true "data"
 // @Success 200 {object} result.Result
 // @router /api/role/delete [delete]
+// @Security ApiKeyAuth
 func DeleteSysRole(c *gin.Context) {
 	var dto entity.SysRoleIdDto
 	_ = c.BindJSON(&dto)
@@ -63,6 +67,7 @@ func DeleteSysRole(c *gin.Context) {
 // @Param data body entity.UpdateSysRoleStatusDto true "data"
 // @Success 200 {object} result.Result
 // @router /api/role/updateStatus [put]
+// @Security ApiKeyAuth
 func UpdateSysRoleStatus(c *gin.Context) {
 	var dto entity.UpdateSysRoleStatusDto
 	_ = c.BindJSON(&dto)
@@ -80,6 +85,7 @@ func UpdateSysRoleStatus(c *gin.Context) {
 // @Param endTime query string false "结束时间"
 // @Success 200 {object} result.Result
 // @router /api/role/list [get]
+// @Security ApiKeyAuth
 func GetSysRoleList(c *gin.Context) {
 	PageNum, _ := strconv.Atoi(c.Query("pagenNum"))
 	PageSize, _ := strconv.Atoi(c.Query("pagenSize"))
@@ -102,6 +108,7 @@ func GetSysRoleList(c *gin.Context) {
 // @Description 角色下拉列表
 // @Success 200 {object} result.Result
 // @router /api/role/vo/list [get]
+// @Security ApiKeyAuth
 func GetSysRoleVo(c *gin.Context) {
 	service.SysRoleService().GetSysRoleVo(c)
 }
@@ -112,6 +119,7 @@ func GetSysRoleVo(c *gin.Context) {
 // @Param id query int true "Id"
 // @Success 200 {object} result.Result
 // @router /api/role/vo/idList [get]
+// @Security ApiKeyAuth
 func QueryRoleMenuIdList(c *gin.Context) {
 	Id, _ := strconv.Atoi(c.Query("id"))
 	service.SysRoleService().QueryRoleMenuIdList(c, Id)
@@ -123,6 +131,7 @@ func QueryRoleMenuIdList(c *gin.Context) {
 // @Param data body entity.RoleMenu true "data"
 // @Success 200 {object} result.Result
 // @router /api/role/assignPermission [put]
+// @Security ApiKeyAuth
 func AssignPermission(c *gin.Context) {
 	var RoleMenu entity.RoleMenu
 	_ = c.BindJSON(&RoleMenu)

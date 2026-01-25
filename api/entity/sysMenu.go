@@ -29,3 +29,23 @@ type SysMenuVo struct {
 type SysMenuIdDto struct {
 	Id uint `json:"id"`
 }
+
+type MenuVo struct {
+	MenuName string `json:"menuName"`
+	Icon     string `json:"icon"`
+	Url      string `json:"url"`
+}
+
+// 左侧菜单树
+type LeftMenuVo struct {
+	Id         uint     `json:"id"`
+	MenuName   string   `json:"menuName"`
+	Icon       string   `json:"icon"`
+	Url        string   `json:"url"`
+	MenuVoList []MenuVo `json:"menuVoList"`
+}
+
+// 权限
+type ValueVo struct {
+	Value string `json:"value"`
+}

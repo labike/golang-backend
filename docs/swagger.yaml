@@ -1,4 +1,37 @@
 definitions:
+  entity.AddSysAdminDto:
+    properties:
+      deptId:
+        type: integer
+      email:
+        type: string
+      nickname:
+        type: string
+      note:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      postId:
+        type: integer
+      roleId:
+        type: integer
+      status:
+        type: integer
+      username:
+        type: string
+    required:
+    - deptId
+    - email
+    - nickname
+    - password
+    - phone
+    - postId
+    - roleId
+    - status
+    - username
+    type: object
   entity.AddSysRoleDto:
     properties:
       description:
@@ -10,7 +43,21 @@ definitions:
       status:
         type: integer
     type: object
+  entity.BatchSysOperateDto:
+    properties:
+      ids:
+        items:
+          type: integer
+        type: array
+    type: object
   entity.DelSysPostDto:
+    properties:
+      ids:
+        items:
+          type: integer
+        type: array
+    type: object
+  entity.DeleteLoginInfoDto:
     properties:
       ids:
         items:
@@ -37,6 +84,13 @@ definitions:
     - password
     - username
     type: object
+  entity.ResetSysAdminPasswordDto:
+    properties:
+      id:
+        type: integer
+      password:
+        type: string
+    type: object
   entity.RoleMenu:
     properties:
       id:
@@ -48,6 +102,11 @@ definitions:
     required:
     - id
     - menuIds
+    type: object
+  entity.SysAdminIdDto:
+    properties:
+      id:
+        type: integer
     type: object
   entity.SysDept:
     properties:
@@ -70,6 +129,11 @@ definitions:
         type: integer
     type: object
   entity.SysDeptDto:
+    properties:
+      id:
+        type: integer
+    type: object
+  entity.SysLoginInfoIdDto:
     properties:
       id:
         type: integer
@@ -106,6 +170,11 @@ definitions:
       id:
         type: integer
     type: object
+  entity.SysOperateIdDto:
+    properties:
+      id:
+        type: integer
+    type: object
   entity.SysPost:
     properties:
       createTime:
@@ -129,6 +198,36 @@ definitions:
   entity.SysRoleIdDto:
     properties:
       id:
+        type: integer
+    type: object
+  entity.UpdateSysAdminDto:
+    properties:
+      deptId:
+        type: integer
+      email:
+        type: string
+      id:
+        type: integer
+      nickname:
+        type: string
+      note:
+        type: string
+      phone:
+        type: string
+      postId:
+        type: integer
+      roleId:
+        type: integer
+      status:
+        type: integer
+      username:
+        type: string
+    type: object
+  entity.UpdateSysAdminStatusDto:
+    properties:
+      id:
+        type: integer
+      status:
         type: integer
     type: object
   entity.UpdateSysPostStatusDto:
@@ -158,6 +257,38 @@ definitions:
       status:
         type: integer
     type: object
+  entity.UpdateUserDto:
+    properties:
+      email:
+        type: string
+      icon:
+        type: string
+      id:
+        type: integer
+      nickname:
+        type: string
+      note:
+        type: string
+      phone:
+        type: string
+      username:
+        type: string
+    type: object
+  entity.UpdateUserPasswordDto:
+    properties:
+      id:
+        type: integer
+      newPassword:
+        type: string
+      password:
+        type: string
+      resetPassword:
+        type: string
+    required:
+    - newPassword
+    - password
+    - resetPassword
+    type: object
   result.Result:
     properties:
       code:
@@ -176,6 +307,203 @@ info:
   title: 管理后台接口
   version: "0.1"
 paths:
+  /api/admin/add:
+    post:
+      description: 创建用户
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entity.AddSysAdminDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
+      summary: 创建用户
+  /api/admin/delete:
+    delete:
+      description: 删除用户
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entity.SysAdminIdDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除用户
+  /api/admin/info:
+    get:
+      description: 根据id查找用户
+      parameters:
+      - description: Id
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
+      summary: 根据id查找用户
+  /api/admin/list:
+    get:
+      description: 分页获取用户列表
+      parameters:
+      - description: 页码
+        in: query
+        name: pageNum
+        type: integer
+      - description: 每页数量
+        in: query
+        name: pageSize
+        type: integer
+      - description: 用户名
+        in: query
+        name: username
+        type: string
+      - description: 状态
+        in: query
+        name: status
+        type: string
+      - description: 开始时间
+        in: query
+        name: beginTime
+        type: string
+      - description: 结束时间
+        in: query
+        name: endTime
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
+      summary: 分页获取用户列表
+  /api/admin/resetPassword:
+    put:
+      description: 重置密码
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entity.ResetSysAdminPasswordDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
+      summary: 重置密码
+  /api/admin/update:
+    put:
+      description: 编辑用户
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entity.UpdateSysAdminDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
+      summary: 编辑用户
+  /api/admin/updatePersonal:
+    put:
+      description: 更新用户信息
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entity.UpdateUserDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新用户信息
+  /api/admin/updatePersonalPassword:
+    put:
+      description: 更新用户密码
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entity.UpdateUserPasswordDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新用户密码
+  /api/admin/updateStatus:
+    put:
+      description: 编辑用户状态
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entity.UpdateSysAdminStatusDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
+      summary: 编辑用户状态
   /api/captcha:
     get:
       description: 验证码接口
@@ -204,6 +532,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
       summary: 新增部门
   /api/dept/delete:
     delete:
@@ -222,6 +552,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
       summary: 根据部门id删除
   /api/dept/info:
     get:
@@ -239,6 +571,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
       summary: 根据部门id查询
   /api/dept/list:
     get:
@@ -259,6 +593,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
       summary: 查询部门列表
   /api/dept/update:
     put:
@@ -277,6 +613,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
       summary: 编辑部门
   /api/dept/vo/list:
     get:
@@ -287,6 +625,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
       summary: 获取部门下拉列表
   /api/login:
     post:
@@ -322,6 +662,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
       summary: 创建菜单
   /api/menu/delete:
     delete:
@@ -340,6 +682,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
       summary: 删除菜单
   /api/menu/info:
     get:
@@ -357,6 +701,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
       summary: 根据菜单id查询
   /api/menu/list:
     get:
@@ -377,6 +723,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
       summary: 获取菜单列表
   /api/menu/update:
     put:
@@ -395,6 +743,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
       summary: 编辑菜单
   /api/menu/vo/list:
     get:
@@ -406,6 +756,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
       summary: 查询菜单下拉列表
   /api/post/add:
     post:
@@ -424,6 +776,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
       summary: 新增岗位接口
   /api/post/batch/delete:
     delete:
@@ -442,6 +796,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
       summary: 批量删除岗位
   /api/post/delete:
     delete:
@@ -460,6 +816,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
       summary: 根据岗位id删除
   /api/post/info:
     get:
@@ -477,6 +835,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
       summary: 根据岗位id查询
   /api/post/list:
     get:
@@ -513,6 +873,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
       summary: 分页查询岗位列表
   /api/post/update:
     put:
@@ -531,6 +893,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
       summary: 编辑岗位
   /api/post/updateStatus:
     put:
@@ -549,6 +913,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
       summary: 岗位状态修改接口
   /api/post/vo/list:
     get:
@@ -560,6 +926,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
       summary: 岗位下拉列表
   /api/role/add:
     post:
@@ -578,6 +946,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
       summary: 创建角色
   /api/role/assignPermission:
     put:
@@ -596,6 +966,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
       summary: 分配权限
   /api/role/delete:
     delete:
@@ -614,6 +986,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
       summary: 删除角色
   /api/role/info:
     get:
@@ -631,6 +1005,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
       summary: 根据角色Id查询
   /api/role/list:
     get:
@@ -667,6 +1043,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
       summary: 获取角色列表(分页)
   /api/role/update:
     put:
@@ -685,6 +1063,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
       summary: 编辑角色
   /api/role/updateStatus:
     put:
@@ -703,6 +1083,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
       summary: 编辑角色状态
   /api/role/vo/idList:
     get:
@@ -720,6 +1102,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
       summary: 根据角色id查询菜单权限
   /api/role/vo/list:
     get:
@@ -731,7 +1115,208 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
       summary: 角色下拉列表
+  /api/sysLoginInfo/batch/delete:
+    delete:
+      description: 批量删除登录日志
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entity.DeleteLoginInfoDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
+      summary: 批量删除登录日志
+  /api/sysLoginInfo/clean:
+    delete:
+      description: 清空登录日志
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
+      summary: 清空登录日志
+  /api/sysLoginInfo/delete:
+    delete:
+      description: 删除某个登录日志
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entity.SysLoginInfoIdDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除某个登录日志
+  /api/sysLoginInfo/list:
+    get:
+      description: 分页查询登陆记录
+      parameters:
+      - description: 页码
+        in: query
+        name: pageNum
+        type: integer
+      - description: 每页数量
+        in: query
+        name: pageSize
+        type: integer
+      - description: 用户账号
+        in: query
+        name: username
+        type: string
+      - description: 登陆状态
+        in: query
+        name: loginStatus
+        type: string
+      - description: 开始时间
+        in: query
+        name: beginTime
+        type: string
+      - description: 结束时间
+        in: query
+        name: endTime
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
+      summary: 分页查询登陆记录
+  /api/sysOperationLog/batch/delete:
+    delete:
+      description: 批量删除操作日志
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entity.BatchSysOperateDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
+      summary: 批量删除操作日志
+  /api/sysOperationLog/clean:
+    delete:
+      description: 清空操作日志
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
+      summary: 清空操作日志
+  /api/sysOperationLog/delete:
+    delete:
+      description: 删除某个操作日志
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entity.SysOperateIdDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除某个操作日志
+  /api/sysOperationLog/list:
+    get:
+      description: 分页查询操作记录
+      parameters:
+      - description: 页码
+        in: query
+        name: pageNum
+        type: integer
+      - description: 每页数量
+        in: query
+        name: pageSize
+        type: integer
+      - description: 用户账号
+        in: query
+        name: username
+        type: string
+      - description: 开始时间
+        in: query
+        name: beginTime
+        type: string
+      - description: 结束时间
+        in: query
+        name: endTime
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
+      summary: 分页查询操作记录
+  /api/upload:
+    post:
+      consumes:
+      - multipart/form-data
+      description: 上传
+      parameters:
+      - description: file
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      security:
+      - ApiKeyAuth: []
+      summary: 上传
 securityDefinitions:
   ApiKeyAuth:
     in: header

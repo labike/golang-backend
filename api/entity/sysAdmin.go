@@ -40,3 +40,91 @@ type LoginDto struct {
 	Image    string `json:"image" validate:"required,min=4,max=6"` // 验证码
 	IdKey    string `json:"idKey" validate:"required"`             // uuid
 }
+
+type AddSysAdminDto struct {
+	PostId   int    `validate:"required"`
+	DeptId   int    `validate:"required"`
+	RoleId   int    `validate:"required"`
+	Username string `validate:"required"`
+	Password string `validate:"required"`
+	Nickname string `validate:"required"`
+	Phone    string `validate:"required"`
+	Email    string `validate:"required"`
+	Note     string
+	Status   int `validate:"required"`
+}
+
+type SysAdminInfo struct {
+	ID       uint   `json:"id"`
+	PostId   int    `json:"postId"`
+	DeptId   int    `json:"deptId"`
+	RoleId   int    `json:"roleId"`
+	Username string `json:"username"`
+	Nickname string `json:"nickname"`
+	Note     string `json:"note"`
+	Email    string `json:"email"`
+	Phone    string `json:"phone"`
+	Status   int    `json:"status"`
+}
+
+type UpdateSysAdminDto struct {
+	Id       uint
+	PostId   int
+	DeptId   int
+	RoleId   int
+	Username string
+	Nickname string
+	Phone    string
+	Email    string
+	Note     string
+	Status   int
+}
+
+type SysAdminIdDto struct {
+	Id uint `json:"id"`
+}
+
+type UpdateSysAdminStatusDto struct {
+	Status int
+	Id     uint
+}
+
+type ResetSysAdminPasswordDto struct {
+	Id       uint
+	Password string
+}
+
+type SysAdminVo struct {
+	ID         uint       `json:"id"`
+	PostId     int        `json:"postId"`
+	DeptId     int        `json:"deptId"`
+	RoleId     int        `json:"roleId"`
+	Username   string     `json:"username"`
+	Nickname   string     `json:"nickname"`
+	PostName   string     `json:"postName"`
+	RoleName   string     `json:"roleName"`
+	DeptName   string     `json:"deptName"`
+	Icon       string     `json:"icon"`
+	Email      string     `json:"email"`
+	Phone      string     `json:"phone"`
+	Note       string     `json:"note"`
+	Status     int        `json:"status"`
+	CreateTime util.HTime `json:"createTime"`
+}
+
+type UpdateUserDto struct {
+	Id       uint
+	Icon     string
+	Username string
+	Nickname string
+	Phone    string
+	Email    string
+	Note     string
+}
+
+type UpdateUserPasswordDto struct {
+	Id            uint
+	Password      string `validate:"required"`
+	NewPassword   string `validate:"required"`
+	ResetPassword string `validate:"required"`
+}

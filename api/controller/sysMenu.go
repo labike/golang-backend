@@ -16,6 +16,7 @@ var sysMenu entity.SysMenu
 // @Param data body entity.SysMenu true "data"
 // @Success 200 {object} result.Result
 // @router /api/menu/add [post]
+// @Security ApiKeyAuth
 func CreateSysMenu(c *gin.Context) {
 	_ = c.BindJSON(&sysMenu)
 	service.SysMenuService().CreateSysMenu(c, sysMenu)
@@ -26,6 +27,7 @@ func CreateSysMenu(c *gin.Context) {
 // @Description 查询菜单下拉列表
 // @Success 200 {object} result.Result
 // @router /api/menu/vo/list [get]
+// @Security ApiKeyAuth
 func QuerySysMenuVoList(c *gin.Context) {
 	service.SysMenuService().GetSysMenuVoList(c)
 }
@@ -36,6 +38,7 @@ func QuerySysMenuVoList(c *gin.Context) {
 // @Param id query int true "id"
 // @Success 200 {object} result.Result
 // @router /api/menu/info [get]
+// @Security ApiKeyAuth
 func QuerySysMenuById(c *gin.Context) {
 	Id, _ := strconv.Atoi(c.Query("id"))
 	service.SysMenuService().GetSysMenuById(c, Id)
@@ -47,6 +50,7 @@ func QuerySysMenuById(c *gin.Context) {
 // @Param data body entity.SysMenu true "data"
 // @Success 200 {object} result.Result
 // @router /api/menu/update [put]
+// @Security ApiKeyAuth
 func UpdateSysMenu(c *gin.Context) {
 	_ = c.BindJSON(&sysMenu)
 	service.SysMenuService().UpdateSysMenu(c, sysMenu)
@@ -58,6 +62,7 @@ func UpdateSysMenu(c *gin.Context) {
 // @Param data body entity.SysMenuIdDto true "data"
 // @Success 200 {object} result.Result
 // @router /api/menu/delete [delete]
+// @Security ApiKeyAuth
 func DeleteSysMenu(c *gin.Context) {
 	dto := entity.SysMenuIdDto{}
 	_ = c.BindJSON(&dto)
@@ -71,6 +76,7 @@ func DeleteSysMenu(c *gin.Context) {
 // @Param menuStatus query string false "菜单状态"
 // @Success 200 {object} result.Result
 // @router /api/menu/list [get]
+// @Security ApiKeyAuth
 func GetSysMenuList(c *gin.Context) {
 	menuName := c.Query("menuName")
 	menuStatus := c.Query("menuStatus")
